@@ -1,0 +1,28 @@
+1.	54
+select count (distinct(orderID))
+from Orders o, Shippers sh
+where o.ShipperID =sh.ShipperID and ShipperName = 'Speedy Express'
+2.	Peacock
+select e.lastname
+from Employees e, orders o
+where e.EmployeeID = o.EmployeeID
+group by e.EmployeeID
+having count(o.orderid) = (
+select count(orderID) as no_orderID
+from orders
+group by EmployeeID
+order by no_orderID desc
+limit 1)
+3.	Gorgonzola Telino
+select count(o.orderID) as no_order, p.productID, p.productname
+from orders o
+inner join orderdetails od
+on o.orderid = od.orderid
+inner join products p
+on od.productid = p.productid
+inner join customers c
+on c.customerid = o.customerid
+where c.country='Germany'
+group by p.productid
+order by no_order desc
+limit 1
