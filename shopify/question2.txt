@@ -1,28 +1,21 @@
-1.	54
-select count (distinct(orderID))
+Q2:
+a.	54
+select count(distinct(orderID))
 from Orders o, Shippers sh
 where o.ShipperID =sh.ShipperID and ShipperName = 'Speedy Express'
-2.	Peacock
-select e.lastname
-from Employees e, orders o
-where e.EmployeeID = o.EmployeeID
-group by e.EmployeeID
-having count(o.orderid) = (
-select count(orderID) as no_orderID
-from orders
-group by EmployeeID
-order by no_orderID desc
-limit 1)
-3.	Gorgonzola Telino
-select count(o.orderID) as no_order, p.productID, p.productname
-from orders o
-inner join orderdetails od
-on o.orderid = od.orderid
-inner join products p
-on od.productid = p.productid
-inner join customers c
-on c.customerid = o.customerid
-where c.country='Germany'
-group by p.productid
-order by no_order desc
+b.	Peacock, 40 orders
+select count(distinct(o.orderID)) as orders, e.employeeID, e.Lastname as last_name
+from employees e, orders o
+where e.employeeID = o.employeeID
+group by e.employeeID
+order by orders desc
+limit 1
+c.	Quantity: 160
+productid: 40
+Productname: Boston Crab Meat
+SELECT sum(od.quantity) as totalquantity, p.productID, p.productname
+FROM [Customers] c, products p, orders o, orderdetails od
+where country like "germany" and c.customerID = o.customerID and od.productID = p.productID and od.orderID = o.orderID
+group by p.productID
+order by totalquantity desc
 limit 1
